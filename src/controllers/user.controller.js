@@ -32,7 +32,7 @@ export async function registerUser(req, res) {
         });
     }
 
-    const avatarLocalPath = req.files?.["avatar"][0]["path"];
+    const avatarLocalPath = req.files?.["avatar"]?.[0]?.["path"];
     const coverImageLocalPath = req.files?.["coverImage"]?.[0]?.["path"];
 
     if (!avatarLocalPath) {
