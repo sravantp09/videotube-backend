@@ -33,7 +33,7 @@ export async function registerUser(req, res) {
     }
 
     const avatarLocalPath = req.files?.["avatar"][0]["path"];
-    const coverImageLocalPath = req.files?.["coverImage"][0]["path"];
+    const coverImageLocalPath = req.files?.["coverImage"]?.[0]?.["path"];
 
     if (!avatarLocalPath) {
       throw new Error("Avatar file is required");
@@ -41,7 +41,10 @@ export async function registerUser(req, res) {
 
     // upload images to cloudinary
     const avatarPath = await uploadFileOnCloudinary(avatarLocalPath);
-    const coverImagePath = await uploadFileOnCloudinary(coverImageLocalPath);
+    let coverImagePath = "";
+    if (coverImageLocalPath) {
+      coverImagePath = await uploadFileOnCloudinary(coverImageLocalPath);
+    }
 
     if (!avatarPath) {
       throw new Error("Failed to upload avatar file");
